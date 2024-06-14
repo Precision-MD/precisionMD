@@ -30,7 +30,6 @@ selected = option_menu(
     orientation='horizontal',
 )
 
-# *** PAGES
 # *** HOME
 if selected == 'Home':
     st.title("Home")
@@ -48,11 +47,6 @@ def add_patient():  # function to add a new patient to collection
     element_id = uuid.uuid4()  # generate a distinguishable id
     st.session_state["patient_rows"].append(
         str(element_id))  # create unique patient rows variable
-
-
-def remove_patient(row_id):  # function to remove an existing patient from collection
-    # remove specific patient key from session
-    st.session_state["patient_rows"].remove(str(row_id))
 
 
 # function to generate and display new patient expander component
@@ -80,12 +74,18 @@ def create_patient():
         add_patient()
 
 
+def remove_patient(row_id):  # function to remove an existing patient from collection
+    # remove specific patient key from session
+    st.session_state["patient_rows"].remove(str(row_id))
+
+
 # *** PATIENT LIST
 if selected == 'Patient List':
 
     # form to create a patient
-    @st.experimental_dialog("Patient Info")
+    @st.experimental_dialog("Patient Info", width="large")
     def patient_form():
+
         st.write(f"Patients")
 
         # separate form fields into columns
