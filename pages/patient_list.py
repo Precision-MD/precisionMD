@@ -14,29 +14,31 @@ def show_patient_list():
 
     # store all initalized patients
     patient_collection = []
+    # patient_names = []
 
-    def add_patient():  # function to add a new patient to collection
+    def add_patient(patient_name):  # function to add a new patient to collection
         element_id = uuid.uuid4()  # generate a distinguishable id
         st.session_state["patient_rows"].append(
-            str(element_id))  # create unique patient rows variable
+            # create unique patient rows variable
+            (patient_name, str(element_id)))
 
     # function to generate and display new patient expander component
 
-    def generate_patient(row_id):
+    def generate_patient(row_id, patient_name):
         row_container = st.empty()  # create empty container
         # separate container with columns
         patient_col = row_container.columns((15, 2))
         # define column for patient info and delete button
-        patient_expander = patient_col[0].expander("Patient Name")
+        patient_expander = patient_col[0].expander(f"{patient_name}")
         patient_expander.write(
             '''"Model Output Goes Here!"'''
         )
-        patient_col[1].button("Delete", key=f"del_{row_id}",
-                              on_click=remove_patient, args=[row_id])
+        patient_col[1].button("Delete", key=f"del_{(patient_name, row_id)}",
+                              on_click=remove_patient, args=[(patient_name, row_id)])
 
     def remove_patient(row_id):  # function to remove an existing patient from collection
         # remove specific patient key from session
-        st.session_state["patient_rows"].remove(str(row_id))
+        st.session_state["patient_rows"].remove(row_id)
 
     # *** PATIENT LIST
     # form to create a patient
@@ -80,10 +82,14 @@ def show_patient_list():
         if st.session_state.patient_form["gr"] == True:
             menu = st.columns(2)
             with menu[0]:
-                add_patient()  # add new patient to collection
+                # add new patient to collection
+                add_patient(st.session_state.patient_form["name"])
             # reset generate report key
             st.session_state.patient_form["gr"] = False
+
         # iterate over and generate all patients in collection
         for patient in st.session_state['patient_rows']:
-            new_patient = generate_patient(patient)
+            print(patient_collection)
+            new_patient = generate_patient(
+                patient[1], f"{patient[0]}")
             patient_collection.append(new_patient)
