@@ -26,7 +26,7 @@ import pages as pg
 
 
 st.set_page_config(initial_sidebar_state="collapsed")
-pages = ["Home", "Login", "Patient List", "Physician Guide", "FAQ"]
+pages = ["Home", "Login", "Patient List", "About Us"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(parent_dir, "gene_svg.svg")
 styles = {
@@ -67,7 +67,7 @@ functions = {
     "Login": pg.show_login,
     "Home": pg.show_home,
     "Patient List": pg.show_patient_list,
-    "Physician Guide": pg.show_physician_guide
+    "About Us": pg.show_about_us
 }
 go_to = functions.get(page)
 print(go_to)

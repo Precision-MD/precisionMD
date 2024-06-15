@@ -4,5 +4,5 @@ from sqlalchemy.sql import text
 from streamlit_navigation_bar import st_navbar
 
 
-def show_physician_guide():
-    st.header("Physician Guide")
+def show_about_us():
+    st.header("About Us")
