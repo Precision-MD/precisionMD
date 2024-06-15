@@ -3,6 +3,7 @@ from streamlit_option_menu import option_menu
 from sqlalchemy.sql import text
 from streamlit_navigation_bar import st_navbar
 import uuid
+import time
 
 
 def show_patient_list():
@@ -14,27 +15,26 @@ def show_patient_list():
 
     # store all initalized patients
     patient_collection = []
-    # patient_names = []
 
-    def add_patient(patient_name):  # function to add a new patient to collection
+    def add_patient(patient_form_filled):  # function to add a new patient to collection
         element_id = uuid.uuid4()  # generate a distinguishable id
         st.session_state["patient_rows"].append(
             # create unique patient rows variable
-            (patient_name, str(element_id)))
+            (patient_form_filled, str(element_id)))
 
     # function to generate and display new patient expander component
-
-    def generate_patient(row_id, patient_name):
+    def generate_patient(patient_form_filled, row_id):
         row_container = st.empty()  # create empty container
         # separate container with columns
         patient_col = row_container.columns((15, 2))
         # define column for patient info and delete button
-        patient_expander = patient_col[0].expander(f"{patient_name}")
+        patient_expander = patient_col[0].expander(
+            f"{patient_form_filled["name"]}")
         patient_expander.write(
             '''"Model Output Goes Here!"'''
         )
-        patient_col[1].button("Delete", key=f"del_{(patient_name, row_id)}",
-                              on_click=remove_patient, args=[(patient_name, row_id)])
+        patient_col[1].button("Delete", key=f"del_{(patient_form_filled, row_id)}",
+                              on_click=remove_patient, args=[(patient_form_filled, row_id)])
 
     def remove_patient(row_id):  # function to remove an existing patient from collection
         # remove specific patient key from session
@@ -68,6 +68,14 @@ def show_patient_list():
         if st.button("Generate Report"):
             st.session_state.patient_form = {"gr": True,
                                              "name": name, "gender": gender, "age": age, "ethnicity": ethnicity, "gene_type": gene_type}
+            # filler loading flow
+            with st.status("Generating Report...", expanded=True):
+                st.write("Running Model...")
+                time.sleep(2)
+                st.write("Recommending Medication...")
+                time.sleep(1)
+                st.write("Process Complete...")
+                time.sleep(1)
             st.rerun()  # rerun script to close modal
 
     # when add patient button is clicked
@@ -83,13 +91,13 @@ def show_patient_list():
             menu = st.columns(2)
             with menu[0]:
                 # add new patient to collection
-                add_patient(st.session_state.patient_form["name"])
+                add_patient(st.session_state.patient_form)
             # reset generate report key
             st.session_state.patient_form["gr"] = False
 
         # iterate over and generate all patients in collection
         for patient in st.session_state['patient_rows']:
             print(patient_collection)
-            new_patient = generate_patient(
-                patient[1], f"{patient[0]}")
+            new_patient = generate_patient(patient[0],
+                                           patient[1])
             patient_collection.append(new_patient)
