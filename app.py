@@ -23,6 +23,8 @@ import pages as pg
 #     s.commit()
 
 # *** IMPORTED NAVIGATION BAR
+
+
 st.set_page_config(initial_sidebar_state="collapsed")
 pages = ["Home", "Login", "Patient List", "Physician Guide", "FAQ"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
@@ -68,5 +70,6 @@ functions = {
     "Physician Guide": pg.show_physician_guide
 }
 go_to = functions.get(page)
+print(go_to)
 if go_to:
     go_to()
