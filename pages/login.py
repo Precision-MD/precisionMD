@@ -18,7 +18,7 @@ def show_login():
         def login_form():
             """Form with widgets to collect physician information"""
             with st.form("Credentials"):
-                st.text_input("Physician", key="physician_id")
+                st.text_input("Physician ID", key="physician_id")
                 st.text_input("Password", type="password", key="password")
                 st.form_submit_button("Log in", on_click=password_entered)
 
