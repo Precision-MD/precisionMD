@@ -28,7 +28,8 @@ import pages as pg
 st.set_page_config(initial_sidebar_state="collapsed")
 pages = ["Home", "Login", "Patient List", "About Us"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
-logo_path = os.path.join(parent_dir, "gene_svg.svg")
+logo_path = os.path.join(
+    parent_dir, "/Users/jiyapatel/new-streamlit/precisionMD/images/gene_svg.svg")
 styles = {
     "nav": {
         "background-color": "#5D7298",
