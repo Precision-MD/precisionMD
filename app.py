@@ -1,7 +1,5 @@
 import streamlit as st
-from sqlalchemy.sql import text
 from streamlit_navigation_bar import st_navbar
-import uuid
 import os
 import pages as pg
 
