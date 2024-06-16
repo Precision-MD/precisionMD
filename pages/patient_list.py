@@ -15,7 +15,6 @@ def show_patient_list():
     patient_collection = []
 
     def add_patient(patient_form_filled):  # function to add a new patient to collection
-        print(patient_form_filled['gender'])
         element_id = uuid.uuid4()  # generate a distinguishable id
         st.session_state["patient_rows"].append(
             # create unique patient rows variable
@@ -96,7 +95,6 @@ def show_patient_list():
             menu = st.columns(2)
             with menu[0]:
                 # add new patient to collection
-                # print(st.session_state.patient_form['diagnosis'])
                 add_patient(st.session_state.patient_form)
             # reset generate report key
             st.session_state.patient_form["gr"] = False
