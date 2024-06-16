@@ -1,11 +1,4 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-from sqlalchemy.sql import text
-from streamlit_navigation_bar import st_navbar
-import streamlit_authenticator as stauth
-import yaml
-from yaml.loader import SafeLoader
-from streamlit_authenticator import Authenticate
 import hmac
 
 
@@ -44,7 +37,7 @@ def show_login():
         # Show inputs for physician_id + password.
         login_form()
         if "password_correct" in st.session_state:
-            st.error("Physician not known or password incorrect")
+            st.error("Unknown physician or incorrect password")
         return False
 
     if not check_password():
@@ -52,5 +45,3 @@ def show_login():
 
     # Main Streamlit app starts here
     st.success("Successful Login")
-    # st.write("Here goes your normal Streamlit app...")
-    # st.button("Click me")

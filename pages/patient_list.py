@@ -1,15 +1,11 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-from sqlalchemy.sql import text
-from streamlit_navigation_bar import st_navbar
 import uuid
 import time
-import pandas as pd
-import numpy as np
 
 
 def show_patient_list():
     st.header("Patient List")
+
     # check if key exists in current session state
     if "patient_rows" not in st.session_state:
         # create key in session
