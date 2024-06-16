@@ -4,6 +4,8 @@ from sqlalchemy.sql import text
 from streamlit_navigation_bar import st_navbar
 import uuid
 import time
+import pandas as pd
+import numpy as np
 
 
 def show_patient_list():
@@ -17,6 +19,7 @@ def show_patient_list():
     patient_collection = []
 
     def add_patient(patient_form_filled):  # function to add a new patient to collection
+        print(patient_form_filled['gender'])
         element_id = uuid.uuid4()  # generate a distinguishable id
         st.session_state["patient_rows"].append(
             # create unique patient rows variable
@@ -30,9 +33,16 @@ def show_patient_list():
         # define column for patient info and delete button
         patient_expander = patient_col[0].expander(
             f"{patient_form_filled["name"]}")
+
         patient_expander.write(
-            '''"Model Output Goes Here!"'''
-        )
+            f'''
+                Gender: {patient_form_filled["gender"]} \n
+                Age: {patient_form_filled["age"]} \n
+                Ethnicity: {patient_form_filled["ethnicity"]} \n
+                Diagnosis: {patient_form_filled["diagnosis"]} \n
+                Gene Type: {patient_form_filled["gene_type"]} \n
+            ''')
+
         patient_col[1].button("Delete", key=f"del_{(patient_form_filled, row_id)}",
                               on_click=remove_patient, args=[(patient_form_filled, row_id)])
 
@@ -52,22 +62,21 @@ def show_patient_list():
         # form fields
         with col1:
             name = st.text_input("Name")
-
         with col2:
             gender = st.text_input("Gender")
-
         with col3:
             age = st.text_input("Age")
-
         with col4:
             ethnicity = st.text_input("Ethnicity")
-
         with col5:
+            diagnosis = st.text_input("Diagnosis")
+        with col6:
             gene_type = st.text_input("Gene Type")
 
         if st.button("Generate Report"):
-            st.session_state.patient_form = {"gr": True,
-                                             "name": name, "gender": gender, "age": age, "ethnicity": ethnicity, "gene_type": gene_type}
+            st.session_state.patient_form = {"gr": True, "name": name, "gender": gender,
+                                             "diagnosis": diagnosis, "ethnicity": ethnicity, "gene_type": gene_type, "age": age
+                                             }
             # filler loading flow
             with st.status("Generating Report...", expanded=True):
                 st.write("Running Model...")
@@ -91,13 +100,13 @@ def show_patient_list():
             menu = st.columns(2)
             with menu[0]:
                 # add new patient to collection
+                # print(st.session_state.patient_form['diagnosis'])
                 add_patient(st.session_state.patient_form)
             # reset generate report key
             st.session_state.patient_form["gr"] = False
 
         # iterate over and generate all patients in collection
         for patient in st.session_state['patient_rows']:
-            print(patient_collection)
             new_patient = generate_patient(patient[0],
                                            patient[1])
             patient_collection.append(new_patient)
