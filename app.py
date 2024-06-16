@@ -1,11 +1,11 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 import os
-import pages as pg
+import pages
 
 # *** IMPORTED NAVIGATION BAR
 st.set_page_config(initial_sidebar_state="collapsed")
-pages = ["Home", "Login", "Patient List"]
+web_pages = ["Home", "Login", "Patient List"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(
     parent_dir, "/Users/jiyapatel/new-streamlit/precisionMD/images/gene_svg.svg")
@@ -37,19 +37,18 @@ options = {
 }
 
 page = st_navbar(
-    pages,
+    web_pages,
     logo_path=logo_path,
     styles=styles,
     options=options,
 )
 
 functions = {
-    "Login": pg.show_login,
-    "Home": pg.show_home,
-    "Patient List": pg.show_patient_list,
-    "About Us": pg.show_about_us
+    "Login": pages.show_login,
+    "Home": pages.show_home,
+    "Patient List": pages.show_patient_list,
+    "About Us": pages.show_about_us
 }
 go_to = functions.get(page)
-print(go_to)
 if go_to:
     go_to()
