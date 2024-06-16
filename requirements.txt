@@ -1,3 +1,4 @@
 streamlit
 streamlit-navigation-bar
 streamlit-option-menu
+pages
