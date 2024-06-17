@@ -45,7 +45,7 @@ page = st_navbar(
 )
 
 functions = {
-    "Patient List": pg.show_patient_list,
+    # "Patient List": pg.show_patient_list,
     "Login": pg.show_login,
     "Home": pg.show_home
 }
