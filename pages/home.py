@@ -9,7 +9,7 @@ def show_home():
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     # Adjust as per your actual folder structure
     logo_path = os.path.join(
-        parent_dir, "images", "/Users/jiyapatel/new-streamlit/precisionMD/images/gene_svg.svg")
+        parent_dir, "images", "pages/home.py")
 
     # Main content of the Home page
     st.title("Welcome to PrecisionMD!")
