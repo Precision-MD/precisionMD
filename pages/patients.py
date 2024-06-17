@@ -26,8 +26,8 @@ def show_patients():
         # separate container with columns
         patient_col = row_container.columns((15, 2))
         # define column for patient info and delete button
-        patient_expander = patient_col[0].expander(
-            f"{patient_form_filled["name"]}")
+        name_patient = patient_form_filled["name"]
+        patient_expander = patient_col[0].expander("Name")
 
         patient_expander.write(
             f'''
