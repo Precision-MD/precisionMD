@@ -47,7 +47,8 @@ page = st_navbar(
 functions = {
     # "Patient List": pg.show_patient_list,
     "Login": pg.show_login,
-    "Home": pg.show_home
+    "Home": pg.show_home,
+    "Patients": pg.show_patients
 }
 go_to = functions.get(page)
 if go_to:

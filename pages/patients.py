@@ -3,7 +3,7 @@ import uuid
 import time
 
 
-def show_patient_list():
+def show_patients():
     st.header("Patient List")
 
     # check if key exists in current session state
