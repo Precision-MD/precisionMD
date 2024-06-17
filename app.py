@@ -1,7 +1,8 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 import os
-import pages
+import pages as pg
+
 
 # *** IMPORTED NAVIGATION BAR
 st.set_page_config(initial_sidebar_state="collapsed")
@@ -44,10 +45,9 @@ page = st_navbar(
 )
 
 functions = {
-    "Login": pages.show_login,
-    "Home": pages.show_home,
-    "Patient List": pages.show_patient_list,
-    "About Us": pages.show_about_us
+    "Login": pg.show_login,
+    "Home": pg.show_home,
+    "Patient List": pg.show_patient_list,
 }
 go_to = functions.get(page)
 if go_to:

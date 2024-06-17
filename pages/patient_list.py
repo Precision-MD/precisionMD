@@ -95,6 +95,7 @@ def show_patient_list():
             menu = st.columns(2)
             with menu[0]:
                 # add new patient to collection
+
                 add_patient(st.session_state.patient_form)
             # reset generate report key
             st.session_state.patient_form["gr"] = False
