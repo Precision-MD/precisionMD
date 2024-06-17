@@ -6,7 +6,7 @@ import pages as pg
 
 # *** IMPORTED NAVIGATION BAR
 st.set_page_config(initial_sidebar_state="collapsed")
-pages = ["Home", "Login", "Patient List"]
+pages = ["Home", "Login", "Patients"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(
     parent_dir, "images/gene_svg.svg")
