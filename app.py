@@ -9,7 +9,7 @@ st.set_page_config(initial_sidebar_state="collapsed")
 pages = ["Home", "Login", "Patient List"]
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(
-    parent_dir, "/Users/jiyapatel/new-streamlit/precisionMD/images/gene_svg.svg")
+    parent_dir, "images/gene_svg.svg")
 styles = {
     "nav": {
         "background-color": "#5D7298",
