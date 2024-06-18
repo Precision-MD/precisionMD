@@ -1,9 +1,17 @@
 import streamlit as st
 import uuid
 import time
+import pickle
 
 
 def show_patients():
+    def pickle_model():
+        # open and load pickle file
+        with open('/Users/jiyapatel/new-streamlit/precisionMD/model.pkl', 'rb') as f:
+            loaded_model = pickle.load(f)
+
+        # prediction = loaded_model.predict(user_input)
+
     st.header("Patient List")
 
     # check if key exists in current session state
@@ -58,15 +66,23 @@ def show_patients():
         with col1:
             name = st.text_input("Name")
         with col2:
-            gender = st.text_input("Gender")
+            gender = st.selectbox(
+                "Gender",
+                ("Female", "Male"))
         with col3:
             age = st.text_input("Age")
         with col4:
-            ethnicity = st.text_input("Ethnicity")
+            ethnicity = st.selectbox(
+                "Ethnicity",
+                ("White", "Black", "Latino", "Other/Unknown"))
         with col5:
-            diagnosis = st.text_input("Diagnosis")
+            diagnosis = st.multiselect(
+                "Diagnosis",
+                ["MDD", "Severe", "Recurrent", "Psychotic"])
         with col6:
-            gene_type = st.text_input("Gene Type")
+            gene_type = st.selectbox(
+                "Gene Type",
+                ("Normal", "Abnormal", "Extreme"))
 
         if st.button("Generate Report"):
             st.session_state.patient_form = {"gr": True, "name": name, "gender": gender,
