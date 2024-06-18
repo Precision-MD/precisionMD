@@ -101,8 +101,8 @@ def decode_medication(prediction_list):  # return decoded medication predictions
     first_med = prediction_list[0][0]
     second_med = prediction_list[0][1]
 
-    decoded_rec_one = med_dict[first_med]
-    decoded_rec_two = med_dict[second_med]
+    decoded_rec_one = (med_dict[first_med]).capitalize()
+    decoded_rec_two = (med_dict[second_med]).capitalize()
 
     decoded_prediction = [decoded_rec_one, decoded_rec_two]
     return decoded_prediction
@@ -131,7 +131,7 @@ def show_patients():
         # separate container with columns
         patient_col = row_container.columns((15, 2))
         # define column for patient info and delete button
-        name_patient = patient_form_filled["name"]
+        name_patient = f"**{patient_form_filled["name"]}**"
         patient_expander = patient_col[0].expander(name_patient)
 
         # *** TRIGGER INTERACTION WITH MODEL
@@ -144,14 +144,25 @@ def show_patients():
         decoded_prediction = decode_medication(coded_prediction)
         print(decoded_prediction)
 
-        patient_expander.write(
-            f'''
-                Gender: {patient_form_filled["gender"]} \n
-                Age: {patient_form_filled["age"]} \n
-                Ethnicity: {patient_form_filled["ethnicity"]} \n
-                Diagnosis: {patient_form_filled["diagnosis"]} \n
-                Gene Type: {patient_form_filled["gene_type"]} \n
-            ''')
+        with patient_expander:
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(
+                    f'''
+                    **Gender:** {patient_form_filled["gender"]} \n
+                    **Age:** {patient_form_filled["age"]} \n
+                    **Ethnicity:** {patient_form_filled["ethnicity"]} \n
+                    **Diagnosis:** {patient_form_filled["diagnosis"]} \n
+                    **Gene Type:** {patient_form_filled["gene_type"]} \n
+                ''')
+            with col2:
+                st.markdown(
+                    f'''
+                    **Recommended Medications:**
+                    1. {decoded_prediction[0]}
+                    2. {decoded_prediction[1]}
+                    '''
+                )
 
         patient_col[1].button("Delete", key=f"del_{(patient_form_filled, row_id)}",
                               on_click=remove_patient, args=[(patient_form_filled, row_id)])
@@ -162,6 +173,7 @@ def show_patients():
 
     # *** PATIENT LIST
     # form to create a patient
+
     @st.experimental_dialog("Patient Info", width="large")
     def patient_form():
         st.header("Patient List")
