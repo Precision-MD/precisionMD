@@ -3,36 +3,33 @@ import os
 
 
 def show_home():
-    # st.set_page_config(page_title="PrecisionMD Home", page_icon="🧬")
-
-    # Define paths
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    # Adjust as per your actual folder structure
-    logo_path = os.path.join(
-        parent_dir, "images", "pages/home.py")
+    img_left, img_center, img_right = st.columns((1, 5, 1))
+    with img_center:
+        st.image(
+            '/Users/jiyapatel/new-streamlit/precisionMD/images/full_pmd_logo_transparent.png', use_column_width=True)
 
     # Main content of the Home page
     st.title("Welcome to PrecisionMD!")
     st.write(
         "PrecisionMD is dedicated to advancing precision medicine through innovative technologies.")
-
+    st.warning(
+        "⚠️ Medication recommendations from PrecisionMD should be vetted by a medical professional before being prescribed.")
     st.markdown("---")  # Separator
 
     # FAQ section with a link
     st.subheader("Frequently Asked Questions")
-    st.write(
-        "Explore our [FAQ page](https://www.example.com/faq) for more information.")
-
-    # Example navigation links
-    if st.button("Home"):
-        st.write("You are on the Home page.")
-    if st.button("Login"):
-        st.write("Navigate to the Login page.")
-    if st.button("Patient List"):
-        st.write("Navigate to the Patient List page.")
-
-    # Display logo
-    if os.path.exists(logo_path):
-        st.image(logo_path, caption='PrecisionMD Logo', use_column_width=True)
-    else:
-        st.write("Logo not found.")
+    with st.expander("What dataset is the model trained on?"):
+        st.write('''
+            The model is trained on data collected from a clinical trial exploring the role of pharmacogenetics in depression medication. 
+            Here's the [study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7178493/) and accompanying [data](https://data.mendeley.com/datasets/25yjwbphn4/1).
+        ''')
+    with st.expander("What dataset is the model trained on?"):
+        st.write('''
+            The model is trained on data collected from a clinical trial exploring the role of pharmacogenetics in depression medication. 
+            Here's the [study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7178493/) and accompanying [data](https://data.mendeley.com/datasets/25yjwbphn4/1).
+        ''')
+    with st.expander("What dataset is the model trained on?"):
+        st.write('''
+            The model is trained on data collected from a clinical trial exploring the role of pharmacogenetics in depression medication. 
+            Here's the [study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7178493/) and accompanying [data](https://data.mendeley.com/datasets/25yjwbphn4/1).
+        ''')
