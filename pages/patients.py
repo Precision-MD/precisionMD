@@ -2,16 +2,89 @@ import streamlit as st
 import uuid
 import time
 import pickle
+import sklearn
+import numpy as np
+import string
+
+
+def format_user_input(patient_form_filled):
+    # age, gender, mdd, severe, recurrent, psychotic, B, L, O/U, W, CT: abnormal, EG: normal, TL: extreme
+    user_input = []
+
+    # age
+    regular_age = int(float(patient_form_filled["age"]))
+    normalized_age = (regular_age - 18) / (85 - 18)
+    # add age to model input
+    user_input.append(normalized_age)
+
+    # gender
+    if patient_form_filled["gender"] == "Male":
+        user_input.append(1)
+    else:
+        user_input.append(0)
+
+    # diagnosis (mdd, severe, recurrent, psychotic)
+    diagnosis_list = [False, False, False, False]
+    for diagnosis in patient_form_filled["diagnosis"]:
+        if diagnosis == 'MDD':
+            diagnosis_list[0] = True
+        elif diagnosis == 'Severe':
+            diagnosis_list[1] = True
+        elif diagnosis == 'Recurrent':
+            diagnosis_list[2] = True
+        elif diagnosis == 'Psychotic':
+            diagnosis_list[3] = True
+
+    # add diagnosis to model input
+    for diagnosis in diagnosis_list:
+        user_input.append(diagnosis)
+
+    # ethnicity (B, L, O/U, W)
+    ethnicity_list = [False, False, False, False]
+    if patient_form_filled["ethnicity"] == 'Black':
+        ethnicity_list[0] = True
+    elif patient_form_filled["ethnicity"] == 'Latino':
+        ethnicity_list[1] = True
+    elif patient_form_filled["ethnicity"] == 'Other/Unknown':
+        ethnicity_list[2] = True
+    elif patient_form_filled["ethnicity"] == 'White':
+        ethnicity_list[3] = True
+
+    # add ethnicity to model input
+    for ethnicity in ethnicity_list:
+        user_input.append(ethnicity)
+
+    # gene type (CT: abnormal, EG: normal, TL: extreme)
+    gene_list = [False, False, False]
+    for gene in patient_form_filled["gene_type"]:
+        if patient_form_filled["gene_type"] == 'Abnormal':
+            gene_list[0] = True
+        elif patient_form_filled["gene_type"] == 'Normal':
+            gene_list[1] = True
+        elif patient_form_filled["gene_type"] == 'Extreme':
+            gene_list[2] = True
+
+    # add gene to model input
+    for gene in gene_list:
+        user_input.append(gene)
+
+    return user_input
+
+
+def pickle_model(formatted_user_input):
+    # open and load pickle file
+    with open('/Users/jiyapatel/new-streamlit/precisionMD/model.pkl', 'rb') as f:
+        loaded_model = pickle.load(f)
+
+    test_subject = np.array([formatted_user_input])
+    test_subject.reshape(1, -1)
+
+    prediction = loaded_model.predict(test_subject)
+
+    return prediction
 
 
 def show_patients():
-    def pickle_model():
-        # open and load pickle file
-        with open('/Users/jiyapatel/new-streamlit/precisionMD/model.pkl', 'rb') as f:
-            loaded_model = pickle.load(f)
-
-        # prediction = loaded_model.predict(user_input)
-
     st.header("Patient List")
 
     # check if key exists in current session state
@@ -36,6 +109,13 @@ def show_patients():
         # define column for patient info and delete button
         name_patient = patient_form_filled["name"]
         patient_expander = patient_col[0].expander(name_patient)
+
+        # *** TRIGGER INTERACTION WITH MODEL
+        # format user input for model intake
+        user_input = format_user_input(patient_form_filled)
+        print(user_input)
+        prediction = pickle_model(user_input)
+        print(prediction)
 
         patient_expander.write(
             f'''
