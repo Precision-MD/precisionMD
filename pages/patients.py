@@ -7,7 +7,7 @@ import numpy as np
 import string
 
 
-def format_user_input(patient_form_filled):
+def format_user_input(patient_form_filled):  # format user input into a form
     # age, gender, mdd, severe, recurrent, psychotic, B, L, O/U, W, CT: abnormal, EG: normal, TL: extreme
     user_input = []
 
@@ -71,7 +71,7 @@ def format_user_input(patient_form_filled):
     return user_input
 
 
-def pickle_model(formatted_user_input):
+def pickle_model(formatted_user_input):  # interact with model and return prediction
     # open and load pickle file
     with open('/Users/jiyapatel/new-streamlit/precisionMD/model.pkl', 'rb') as f:
         loaded_model = pickle.load(f)
@@ -82,6 +82,30 @@ def pickle_model(formatted_user_input):
     prediction = loaded_model.predict(test_subject)
 
     return prediction
+
+
+def decode_medication(prediction_list):  # return decoded medication predictions
+    # letter coded medication dictionary
+    med_dict = {'A': 'AMITRIPTYLINE', 'B': 'ARIPIPRAZOLE', 'C': 'ASENAPINE',
+                'D': 'BUPROPION', 'E': 'CHLORPROMAZINE', 'F': 'CITALOPRAM',
+                'G': 'CLOMIPRAMINE', 'H': 'CLONIDINE', 'I': 'DOXEPIN',
+                'J': 'DULOXETINE', 'K': 'ESCITALOPRAM', 'L': 'FLUOXETINE',
+                'M': 'FLUPHENAZINE', 'N': 'FLUVOXAMINE', 'O': 'GUANFACINE',
+                'P': 'HALOPERIDOL', 'Q': 'IMIPRAMINE', 'R': 'LITHIUM CARBONATE',
+                'S': 'METHYLPHENIDATE', 'T': 'MIRTAZAPINE', 'U': 'NORTRIPTYLINE',
+                'V': 'OLANZAPINE', 'W': 'PALIPERIDONE', 'X': 'PERPHENAZINE',
+                'Y': 'QUETIAPINE', 'Z': 'RISPERIDONE', 'AA': 'SERTRALINE',
+                'AB': 'TRAZODONE', 'AC': 'VENLAFAXINE', 'AD': 'ZIPRASIDONE'
+                }
+
+    first_med = prediction_list[0][0]
+    second_med = prediction_list[0][1]
+
+    decoded_rec_one = med_dict[first_med]
+    decoded_rec_two = med_dict[second_med]
+
+    decoded_prediction = [decoded_rec_one, decoded_rec_two]
+    return decoded_prediction
 
 
 def show_patients():
@@ -114,8 +138,11 @@ def show_patients():
         # format user input for model intake
         user_input = format_user_input(patient_form_filled)
         print(user_input)
-        prediction = pickle_model(user_input)
-        print(prediction)
+        # retrieve mdeication predictions from model
+        coded_prediction = pickle_model(user_input)
+        # decode letter coded medication model predicts
+        decoded_prediction = decode_medication(coded_prediction)
+        print(decoded_prediction)
 
         patient_expander.write(
             f'''
