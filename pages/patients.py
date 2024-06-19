@@ -6,7 +6,6 @@ import sklearn
 import numpy as np
 import requests
 import json
-import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 
@@ -217,12 +216,6 @@ def show_patients():
                 color_continuous_scale="blues",
                 range_color=[min(df1['Count'] - 1000), max(df1['Count'])],
             )
-            # fig1.update_layout(plot_bgcolor='#CBD1E1',
-            #                    paper_bgcolor='#CBD1E1',
-            #                    #    font_color='black',
-            #                    #    xaxis_title_font_color='black',
-            #                    #    yaxis_title_font_color='black',
-            #                    )
 
             df2 = pd.DataFrame(
                 {'Reactions': drug_two_reactions[0], 'Count': drug_two_reactions[1]})
@@ -234,7 +227,6 @@ def show_patients():
                 color_continuous_scale="blues",
                 range_color=[min(df2['Count']) - 1000, max(df2['Count'])]
             )
-            # fig2.update_layout(plot_bgcolor='#A6B5C9', paper_bgcolor='#A6B5C9')
 
             tab1, tab2 = st.tabs(
                 [f"{decoded_prediction[0]} Reactions", f"{decoded_prediction[1]} Reactions"])
