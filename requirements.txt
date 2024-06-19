@@ -2,3 +2,4 @@ streamlit==1.35.0
 streamlit-navigation-bar==3.3.0
 pages
 scikit-learn==1.2.2
+plotly.express
