@@ -6,7 +6,7 @@ def show_home():
     img_left, img_center, img_right = st.columns((1, 5, 1))
     with img_center:
         st.image(
-            '/Users/jiyapatel/new-streamlit/precisionMD/images/full_pmd_logo_transparent.png', use_column_width=True)
+            'images/full_pmd_logo_transparent.png', use_column_width=True)
 
     # Main content of the Home page
     st.title("Welcome to PrecisionMD!")
