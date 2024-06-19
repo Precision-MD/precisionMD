@@ -2,17 +2,28 @@ import streamlit as st
 
 
 def show_home():
-    img_left, img_center, img_right = st.columns((1, 3, 1))
-    with img_center:
-        st.image(
-            'images/full_pmd_logo_transparent.png', use_column_width=True)
+    center_align_css = """
+    <style>
+        .title {
+            text-align: center;
+            font-size: 40px;  # Adjust font size as needed
+        }
+    </style>
+    """
+    img_left, img_center, img_right = st.columns((1, 4, 1))
 
-    # Main content of the Home page
-    st.title("Welcome to PrecisionMD!")
-    st.write(
-        "PrecisionMD is dedicated to advancing precision medicine through innovative technologies.")
-    st.warning(
-        "⚠️ Medication recommendations from PrecisionMD should be vetted by a medical professional before being prescribed.")
+    with img_center:
+
+        # Main content of the Home page
+        st.image(
+            'images/cropped_logo.png')
+        st.markdown(center_align_css, unsafe_allow_html=True)
+        st.markdown("<h1 class='title'>Welcome to PrecisionMD!</h1>",
+                    unsafe_allow_html=True)
+        st.markdown(
+            "PrecisionMD is dedicated to advancing precision medicine through innovative technologies.", unsafe_allow_html=True)
+        st.warning(
+            "⚠️ Medication recommendations from PrecisionMD should be vetted by a medical professional before being prescribed.")
     st.markdown("---")  # Separator
 
     # FAQ section with a link
