@@ -200,6 +200,7 @@ def show_patients():
                     2. {decoded_prediction[1]}
                     '''
                 )
+            st.markdown("---")  # Separator
             # plot reactions graph by triggering API call on predicted drugs
             drug_one_reactions = open_fda_api(decoded_prediction[0])
             drug_two_reactions = open_fda_api(decoded_prediction[1])
