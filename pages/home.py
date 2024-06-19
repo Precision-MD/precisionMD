@@ -3,7 +3,7 @@ import os
 
 
 def show_home():
-    img_left, img_center, img_right = st.columns((1, 4, 1))
+    img_left, img_center, img_right = st.columns((1, 3, 1))
     with img_center:
         st.image(
             'images/full_pmd_logo_transparent.png', use_column_width=True)
