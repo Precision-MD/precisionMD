@@ -206,37 +206,44 @@ def show_patients():
             drug_two_reactions = open_fda_api(decoded_prediction[1])
 
             st.subheader("Reported Drug Reactions")
-            df1 = pd.DataFrame(
-                {'Reactions': drug_one_reactions[0], 'Count': drug_one_reactions[1]})
-
-            fig1 = px.bar(
-                df1,
-                x="Reactions",
-                y="Count",
-                color="Count",
-                color_continuous_scale="blues",
-                range_color=[min(df1['Count'] - 1000), max(df1['Count'])],
-            )
-
-            df2 = pd.DataFrame(
-                {'Reactions': drug_two_reactions[0], 'Count': drug_two_reactions[1]})
-            fig2 = px.bar(
-                df2,
-                x="Reactions",
-                y="Count",
-                color="Count",
-                color_continuous_scale="blues",
-                range_color=[min(df2['Count']) - 1000, max(df2['Count'])]
-            )
-
             tab1, tab2 = st.tabs(
                 [f"{decoded_prediction[0]} Reactions", f"{decoded_prediction[1]} Reactions"])
-            with tab1:
-                st.plotly_chart(fig1, theme="streamlit",
-                                use_container_width=True)
-            with tab2:
-                st.plotly_chart(fig2, theme="streamlit",
-                                use_container_width=True)
+            if len(drug_one_reactions) != 0:
+                df1 = pd.DataFrame(
+                    {'Reactions': drug_one_reactions[0], 'Count': drug_one_reactions[1]})
+
+                fig1 = px.bar(
+                    df1,
+                    x="Reactions",
+                    y="Count",
+                    color="Count",
+                    color_continuous_scale="blues",
+                    range_color=[min(df1['Count'] - 1000), max(df1['Count'])],
+                )
+                with tab1:
+                    st.plotly_chart(fig1, theme="streamlit",
+                                    use_container_width=True)
+            else:
+                with tab1:
+                    st.write(f"No results found for {decoded_prediction[0]}.")
+
+            if len(drug_two_reactions) != 0:
+                df2 = pd.DataFrame(
+                    {'Reactions': drug_two_reactions[0], 'Count': drug_two_reactions[1]})
+                fig2 = px.bar(
+                    df2,
+                    x="Reactions",
+                    y="Count",
+                    color="Count",
+                    color_continuous_scale="blues",
+                    range_color=[min(df2['Count']) - 1000, max(df2['Count'])]
+                )
+                with tab2:
+                    st.plotly_chart(fig2, theme="streamlit",
+                                    use_container_width=True)
+            else:
+                with tab2:
+                    st.write(f"No results found for {decoded_prediction[1]}.")
 
         patient_col[1].button("Delete", key=f"del_{(patient_form_filled, row_id)}",
                               on_click=remove_patient, args=[(patient_form_filled, row_id)])
