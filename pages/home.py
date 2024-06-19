@@ -2,6 +2,7 @@ import streamlit as st
 
 
 def show_home():
+    # css styling
     center_align_css = """
     <style>
         .title {
