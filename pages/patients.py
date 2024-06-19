@@ -208,7 +208,7 @@ def show_patients():
             st.subheader("Reported Drug Reactions")
             tab1, tab2 = st.tabs(
                 [f"{decoded_prediction[0]} Reactions", f"{decoded_prediction[1]} Reactions"])
-            if len(drug_one_reactions) != 0:
+            if len(drug_one_reactions[0]) != 0 and len(drug_one_reactions[1]) != 0:
                 df1 = pd.DataFrame(
                     {'Reactions': drug_one_reactions[0], 'Count': drug_one_reactions[1]})
 
@@ -227,7 +227,7 @@ def show_patients():
                 with tab1:
                     st.write(f"No results found for {decoded_prediction[0]}.")
 
-            if len(drug_two_reactions) != 0:
+            if len(drug_two_reactions[0]) != 0 and len(drug_two_reactions[1]) != 0:
                 df2 = pd.DataFrame(
                     {'Reactions': drug_two_reactions[0], 'Count': drug_two_reactions[1]})
                 fig2 = px.bar(
