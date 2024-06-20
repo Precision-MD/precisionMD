@@ -205,7 +205,7 @@ def show_patients():
                 )
             st.markdown("---")  # Separator
 
-            @st.cache_data
+            @st.cache_data(experimental_allow_widgets=True)
             def build_plots():
                 # plot reactions graph by triggering API call on predicted drugs
                 drug_one_reactions = open_fda_api(decoded_prediction[0])
