@@ -8,6 +8,8 @@ import requests
 import json
 import pandas as pd
 import plotly.express as px
+import time
+import asyncio
 
 
 def open_fda_api(medication_name):  # makes call to openFDA Drugs API
@@ -147,7 +149,6 @@ def decode_medication(prediction_list):  # return decoded medication predictions
 
 def show_patients():
     st.header("Patient List")
-
     # check if key exists in current session state
     if "patient_rows" not in st.session_state:
         # create key in session
@@ -156,7 +157,8 @@ def show_patients():
     # store all initalized patients
     patient_collection = []
 
-    def add_patient(patient_form_filled):  # function to add a new patient to collection
+    # function to add a new patient to collection
+    def add_patient(patient_form_filled):
         element_id = uuid.uuid4()  # generate a distinguishable id
         st.session_state["patient_rows"].append(
             # create unique patient rows variable
@@ -170,6 +172,8 @@ def show_patients():
         # define column for patient info and delete button
         name_patient = patient_form_filled["name"]
         patient_expander = patient_col[0].expander(name_patient)
+        patient_col[1].button("Delete", key=f"del_{(patient_form_filled, row_id)}",
+                              on_click=remove_patient, args=[(patient_form_filled, row_id)])
 
         # *** TRIGGER INTERACTION WITH MODEL
         # format user input for model intake
@@ -201,60 +205,65 @@ def show_patients():
                     '''
                 )
             st.markdown("---")  # Separator
-            # plot reactions graph by triggering API call on predicted drugs
-            drug_one_reactions = open_fda_api(decoded_prediction[0])
-            drug_two_reactions = open_fda_api(decoded_prediction[1])
 
-            st.subheader("Reported Drug Reactions")
-            tab1, tab2 = st.tabs(
-                [f"{decoded_prediction[0]} Reactions", f"{decoded_prediction[1]} Reactions"])
-            if len(drug_one_reactions[0]) != 0 and len(drug_one_reactions[1]) != 0:
-                df1 = pd.DataFrame(
-                    {'Reactions': drug_one_reactions[0], 'Count': drug_one_reactions[1]})
+            @st.cache
+            def build_plots():
+                # plot reactions graph by triggering API call on predicted drugs
+                drug_one_reactions = open_fda_api(decoded_prediction[0])
+                drug_two_reactions = open_fda_api(decoded_prediction[1])
 
-                fig1 = px.bar(
-                    df1,
-                    x="Reactions",
-                    y="Count",
-                    color="Count",
-                    color_continuous_scale="blues",
-                    range_color=[min(df1['Count'] - 1000), max(df1['Count'])],
-                )
-                with tab1:
-                    st.plotly_chart(fig1, theme="streamlit",
-                                    use_container_width=True)
-            else:
-                with tab1:
-                    st.write(f"No results found for {decoded_prediction[0]}.")
+                st.subheader("Reported Drug Reactions")
+                tab1, tab2 = st.tabs(
+                    [f"{decoded_prediction[0]} Reactions", f"{decoded_prediction[1]} Reactions"])
+                if len(drug_one_reactions[0]) != 0 and len(drug_one_reactions[1]) != 0:
+                    df1 = pd.DataFrame(
+                        {'Reactions': drug_one_reactions[0], 'Count': drug_one_reactions[1]})
 
-            if len(drug_two_reactions[0]) != 0 and len(drug_two_reactions[1]) != 0:
-                df2 = pd.DataFrame(
-                    {'Reactions': drug_two_reactions[0], 'Count': drug_two_reactions[1]})
-                fig2 = px.bar(
-                    df2,
-                    x="Reactions",
-                    y="Count",
-                    color="Count",
-                    color_continuous_scale="blues",
-                    range_color=[min(df2['Count']) - 1000, max(df2['Count'])]
-                )
-                with tab2:
-                    st.plotly_chart(fig2, theme="streamlit",
-                                    use_container_width=True)
-            else:
-                with tab2:
-                    st.write(f"No results found for {decoded_prediction[1]}.")
+                    fig1 = px.bar(
+                        df1,
+                        x="Reactions",
+                        y="Count",
+                        color="Count",
+                        color_continuous_scale="blues",
+                        range_color=[min(df1['Count'] - 1000),
+                                     max(df1['Count'])],
+                    )
+                    with tab1:
+                        st.plotly_chart(fig1, theme="streamlit",
+                                        use_container_width=True)
+                else:
+                    with tab1:
+                        st.write("No results found for"
+                                 + decoded_prediction[0] + ".")
 
-        patient_col[1].button("Delete", key=f"del_{(patient_form_filled, row_id)}",
-                              on_click=remove_patient, args=[(patient_form_filled, row_id)])
+                if len(drug_two_reactions[0]) != 0 and len(drug_two_reactions[1]) != 0:
+                    df2 = pd.DataFrame(
+                        {'Reactions': drug_two_reactions[0], 'Count': drug_two_reactions[1]})
+                    fig2 = px.bar(
+                        df2,
+                        x="Reactions",
+                        y="Count",
+                        color="Count",
+                        color_continuous_scale="blues",
+                        range_color=[min(df2['Count']) - 1000,
+                                     max(df2['Count'])]
+                    )
+                    with tab2:
+                        st.plotly_chart(fig2, theme="streamlit",
+                                        use_container_width=True)
+                else:
+                    with tab2:
+                        st.write("No results found for" +
+                                 decoded_prediction[1] + ".")
+            build_plots()
 
-    def remove_patient(row_id):  # function to remove an existing patient from collection
+    # function to remove an existing patient from collection
+    def remove_patient(row_id):
         # remove specific patient key from session
         st.session_state["patient_rows"].remove(row_id)
 
     # *** PATIENT LIST
     # form to create a patient
-
     @st.experimental_dialog("Patient Info", width="large")
     def patient_form():
         st.header("Patient List")
@@ -301,7 +310,6 @@ def show_patients():
     # when add patient button is clicked
     if st.button("Add Patient"):
         patient_form()
-        return
 
     if "patient_form" not in st.session_state:
         pass
@@ -311,13 +319,11 @@ def show_patients():
             menu = st.columns(2)
             with menu[0]:
                 # add new patient to collection
-
                 add_patient(st.session_state.patient_form)
             # reset generate report key
             st.session_state.patient_form["gr"] = False
 
-        # iterate over and generate all patients in collection
-        for patient in st.session_state['patient_rows']:
-            new_patient = generate_patient(patient[0],
-                                           patient[1])
-            patient_collection.append(new_patient)
+    for patient in st.session_state['patient_rows']:
+        new_patient = generate_patient(patient[0],
+                                       patient[1])
+        patient_collection.append(new_patient)
