@@ -11,6 +11,7 @@ import plotly.express as px
 import time
 
 
+@st.cache_data(experimental_allow_widgets=True)
 def open_fda_api(medication_name):  # makes call to openFDA Drugs API
     url = "https://api.fda.gov/drug/event.json?search=patient.drug.openfda.brand_name:" + \
         medication_name + "&count=patient.reaction.reactionmeddrapt.exact"
@@ -205,7 +206,6 @@ def show_patients():
                 )
             st.markdown("---")  # Separator
 
-            @st.cache_data(experimental_allow_widgets=True)
             def build_plots():
                 # plot reactions graph by triggering API call on predicted drugs
                 drug_one_reactions = open_fda_api(decoded_prediction[0])
@@ -232,7 +232,7 @@ def show_patients():
                                         use_container_width=True)
                 else:
                     with tab1:
-                        st.write("No results found for"
+                        st.write("No results found for "
                                  + decoded_prediction[0] + ".")
 
                 if len(drug_two_reactions[0]) != 0 and len(drug_two_reactions[1]) != 0:
@@ -252,7 +252,7 @@ def show_patients():
                                         use_container_width=True)
                 else:
                     with tab2:
-                        st.write("No results found for" +
+                        st.write("No results found for " +
                                  decoded_prediction[1] + ".")
             build_plots()
 
