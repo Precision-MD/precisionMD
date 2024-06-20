@@ -9,7 +9,6 @@ import json
 import pandas as pd
 import plotly.express as px
 import time
-import asyncio
 
 
 def open_fda_api(medication_name):  # makes call to openFDA Drugs API
@@ -206,7 +205,7 @@ def show_patients():
                 )
             st.markdown("---")  # Separator
 
-            @st.cache
+            @st.cache_data
             def build_plots():
                 # plot reactions graph by triggering API call on predicted drugs
                 drug_one_reactions = open_fda_api(decoded_prediction[0])
