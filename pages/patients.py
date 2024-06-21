@@ -32,7 +32,6 @@ def open_fda_api(medication_name):  # makes call to openFDA Drugs API
 
             # handle potentially triggering reaction
             if extracted_reaction == "COMPLETED SUICIDE":
-                print("here")
                 reactions.append("SUICIDAL TENDENCIES")
             else:
                 reactions.append(extracted_reaction)
@@ -156,10 +155,16 @@ def decode_medication(prediction_list):  # return decoded medication predictions
 
 def show_patients():
     st.header("Patient List")
+    # existing patients
+    chen_patient_form = {"gr": True, "name": 'Li Chen', "gender": 'Female',
+                         "diagnosis": ['Severe', 'Recurrent'], "ethnicity": 'Other/Unknown', "gene_type": 'Extreme', "age": 27}
+    elijah_patient_form = {"gr": True, "name": 'Devante Jones', "gender": 'Male',
+                           "diagnosis": ['Severe', 'Psychotic'], "ethnicity": 'Black', "gene_type": 'Abnormal', "age": 45}
     # check if key exists in current session state
     if "patient_rows" not in st.session_state:
         # create key in session
-        st.session_state["patient_rows"] = []
+        st.session_state["patient_rows"] = [(chen_patient_form, "34546"),
+                                            (elijah_patient_form, "47584")]
 
     # store all initalized patients
     patient_collection = []
@@ -317,8 +322,6 @@ def show_patients():
     if st.button("Add Patient"):
         patient_form()
 
-    # fake people
-
     if "patient_form" not in st.session_state:
         pass
     else:
@@ -332,6 +335,7 @@ def show_patients():
             st.session_state.patient_form["gr"] = False
 
     for patient in st.session_state['patient_rows']:
+
         new_patient = generate_patient(patient[0],
                                        patient[1])
         patient_collection.append(new_patient)
