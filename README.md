@@ -12,8 +12,7 @@ Navigate to the Patients page
 Click on the "Add Patient" button to generate a new patient entry
 
 Input the patient's information and click the "Generate Report" button to see the top two recommended medications and associated top 5 drug reactions reported to the FDA.
-[![Watch the video](![Uploading image.png…]()
-)](https://www.loom.com/share/3fa1855ab90949479a9784f1322ed224?sid=e42c6d7d-acc1-4178-98f6-5513bf6d8680)
+[![Video Title]](https://www.youtube.com/watch?v=Jp51wBdoBf8)
 
 ## Installation Instructions:
 ### Run it Locally:
