@@ -12,8 +12,7 @@ Navigate to the Patients page
 Click on the "Add Patient" button to generate a new patient entry
 
 Input the patient's information and click the "Generate Report" button to see the top two recommended medications and associated top 5 drug reactions reported to the FDA.
-[![Video Title](<img width="798" alt="image" src="https://github.com/Precision-MD/precisionMD/assets/128255337/58ac986c-1fb8-4511-857f-724437e8a19f">)
-](https://www.youtube.com/watch?v=Jp51wBdoBf8)
+[![Watch the video](https://img.youtube.com/vi/_5tFXJQIzi4/0.jpg)](https://www.youtube.com/watch?v=Jp51wBdoBf8)
 
 ## Installation Instructions:
 ### Run it Locally:
