@@ -14,7 +14,7 @@ Input the patient's information and click the "Generate Report" button to see th
 [![Watch the video](images/full_pmd_logo.png)](https://www.youtube.com/watch?v=Jp51wBdoBf8)
 
 ## Installation Instructions:
-### Run it Locally:
+### Run it Locally
 ```sh
 virtualenv .venv
 source .venv/bin/activate
