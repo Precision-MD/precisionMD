@@ -1,9 +1,19 @@
 # PrecisionMD
-## Project Description:
+## Project Description
 PrecisionMD is a software that utilizes a SVM machine learning model to create a personalized medicine tool for doctors. For a patient diagnosed with depression, it predicts the top two most effective antidepressants based on their genetic makeup and demographics, to maximize treatment success rates.
 
 ## Prototype Demo
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://precisionmd.streamlit.app/)
+
+## Usage 
+Navigate to the Patients page
+<img width="1197" alt="image" src="https://github.com/Precision-MD/precisionMD/assets/128255337/55a39deb-bade-4e50-b19b-e29ed4f58d3f">
+
+Click on the "Add Patient" button to generate a new patient entry
+
+Input the patient's information and click the "Generate Report" button to see the top two recommended medications and associated top 5 drug reactions reported to the FDA.
+[![Watch the video](![Uploading image.png…]()
+)](https://www.loom.com/share/3fa1855ab90949479a9784f1322ed224?sid=e42c6d7d-acc1-4178-98f6-5513bf6d8680)
 
 ## Installation Instructions:
 ### Run it Locally:
