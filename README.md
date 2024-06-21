@@ -10,6 +10,7 @@ Navigate to the Patients page and click on the "Add Patient" button to generate 
 <img width="1197" alt="image" src="https://github.com/Precision-MD/precisionMD/assets/128255337/55a39deb-bade-4e50-b19b-e29ed4f58d3f">
 
 Input the patient's information and click the "Generate Report" button to see the top two recommended medications and associated top 5 drug reactions reported to the FDA.
+
 [![Watch the video](images/full_pmd_logo.png)](https://www.youtube.com/watch?v=Jp51wBdoBf8)
 
 ## Installation Instructions:
