@@ -118,7 +118,7 @@ def format_user_input(patient_form_filled):  # format user input into a form
 
 def pickle_model(formatted_user_input):  # interact with model and return prediction
     # open and load pickle file
-    with open('model_latest.pkl', 'rb') as f:
+    with open('svm_model_final.pkl', 'rb') as f:
         loaded_model = pickle.load(f)
 
     test_subject = np.array([formatted_user_input])
