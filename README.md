@@ -11,7 +11,7 @@ Navigate to the Patients page and click on the "Add Patient" button to generate 
 
 Input the patient's information and click the "Generate Report" button to see the top two recommended medications and associated top 5 drug reactions reported to the FDA.
 
-[![Watch the video](images/full_pmd_logo.png)](https://www.youtube.com/watch?v=Jp51wBdoBf8)
+![]()
 
 ## Installation Instructions:
 ### Run it Locally
