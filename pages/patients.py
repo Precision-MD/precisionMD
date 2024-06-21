@@ -29,10 +29,17 @@ def open_fda_api(medication_name):  # makes call to openFDA Drugs API
             if i >= 5:
                 break
             extracted_reaction = reaction['term']
-            reactions.append(extracted_reaction)
+
+            # handle potentially triggering reaction
+            if extracted_reaction == "COMPLETED SUICIDE":
+                print("here")
+                reactions.append("SUICIDAL TENDENCIES")
+            else:
+                reactions.append(extracted_reaction)
 
             extracted_reaction_count = reaction['count']
             counts.append(extracted_reaction_count)
+
             i += 1
 
         if data.get('results'):
@@ -112,7 +119,7 @@ def format_user_input(patient_form_filled):  # format user input into a form
 
 def pickle_model(formatted_user_input):  # interact with model and return prediction
     # open and load pickle file
-    with open('model.pkl', 'rb') as f:
+    with open('model_latest.pkl', 'rb') as f:
         loaded_model = pickle.load(f)
 
     test_subject = np.array([formatted_user_input])
@@ -309,6 +316,8 @@ def show_patients():
     # when add patient button is clicked
     if st.button("Add Patient"):
         patient_form()
+
+    # fake people
 
     if "patient_form" not in st.session_state:
         pass
