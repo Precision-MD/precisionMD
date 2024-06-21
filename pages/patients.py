@@ -159,7 +159,7 @@ def show_patients():
     chen_patient_form = {"gr": True, "name": 'Li Chen', "gender": 'Female',
                          "diagnosis": ['Severe', 'Recurrent'], "ethnicity": 'Other/Unknown', "gene_type": 'Extreme', "age": 27}
     elijah_patient_form = {"gr": True, "name": 'Devante Jones', "gender": 'Male',
-                           "diagnosis": ['Severe', 'Psychotic'], "ethnicity": 'Black', "gene_type": 'Abnormal', "age": 45}
+                           "diagnosis": ['Severe', 'Psychotic'], "ethnicity": 'Black', "gene_type": 'Extreme', "age": 88}
     # check if key exists in current session state
     if "patient_rows" not in st.session_state:
         # create key in session
