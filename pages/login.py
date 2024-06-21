@@ -18,9 +18,7 @@ def show_login():
 
         def password_entered():
             """Checks whether a password entered by the user is correct."""
-            if st.session_state["physician_id"] in st.secrets[
-                "passwords"
-            ] and hmac.compare_digest(
+            if st.session_state["physician_id"] in st.secrets["passwords"] and hmac.compare_digest(
                 st.session_state["password"],
                 st.secrets.passwords[st.session_state["physician_id"]],
             ):
