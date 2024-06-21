@@ -6,10 +6,8 @@ PrecisionMD is a software that utilizes a SVM machine learning model to create a
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://precisionmd.streamlit.app/)
 
 ## Usage 
-Navigate to the Patients page
+Navigate to the Patients page and click on the "Add Patient" button to generate a new patient entry.
 <img width="1197" alt="image" src="https://github.com/Precision-MD/precisionMD/assets/128255337/55a39deb-bade-4e50-b19b-e29ed4f58d3f">
-
-Click on the "Add Patient" button to generate a new patient entry
 
 Input the patient's information and click the "Generate Report" button to see the top two recommended medications and associated top 5 drug reactions reported to the FDA.
 [![Watch the video](images/full_pmd_logo.png)](https://www.youtube.com/watch?v=Jp51wBdoBf8)
