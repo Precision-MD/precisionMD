@@ -11,5 +11,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 ## Prototype Demo
-[![Streamlit App](https://precisionmd.streamlit.app/)]
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://precisionmd.streamlit.app/)
+
 
